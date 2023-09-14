@@ -1,0 +1,63 @@
+/* MovieCard.css */
+
+.movie-card {
+  width: 250px;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+
+.movie-card-image {
+  height: 370px;
+  width: 250px;
+  background-size: cover;
+  background-position: center;
+}
+
+.tv-series-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color:  #F3F4F680;
+  color: #111827;
+  font-weight: 500;
+  font-size: medium;
+  padding: 5px 10px;
+  border-radius: 50px;
+}
+
+.fav-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.movie-card-details {
+  padding: 10px;
+  text-align: left;
+}
+
+.movie-title {
+  color: #111827;
+  font-size: 20px;
+  font-weight: 500;
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden; /* Hides overflowed text */
+  text-overflow: ellipsis; /* Displays ellipsis (...) for overflowed text */
+  max-width: 100%; /* Limits the width of the title to the container width */
+}
+
+
+.movie-rating,
+.movie-year {
+  font-size: 0.9rem;
+  margin: 5px 0;
+  color: #111827;
+  font-weight: 400;
+}
+.movie-genres {
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+/* Add more styles as needed */

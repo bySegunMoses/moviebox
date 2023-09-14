@@ -1,0 +1,32 @@
+/* CSS for larger screens (e.g., desktop) */
+@media (min-width: 768px) {
+    .sidebar {
+      /* Add styles for the sidebar on larger screens */
+      position: fixed;
+      width: 250px; /* Adjust the width as needed */
+      height: 100%;
+      overflow-y: auto; /* Allow sidebar content to scroll if it overflows */
+    }
+  
+    #detail {
+      /* Add styles for the main content area on larger screens */
+      margin-left: 250px; /* Match the width of the sidebar */
+    }
+  }
+  
+  /* CSS for smaller screens (e.g., mobile) */
+  @media (max-width: 767px) {
+    .sidebar {
+      /* Add styles for the sidebar on smaller screens */
+      position: static; /* Reset the position to static */
+      width: 100%; /* Full width */
+    }
+  
+    #detail {
+      /* Add styles for the main content area on smaller screens */
+      margin-left: 0; /* Reset margin */
+    }
+  }
+  
+  /* Add any other styles for components, responsive design, and dynamic styling as needed */
+  
