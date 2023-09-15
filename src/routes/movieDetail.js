@@ -31,6 +31,88 @@ const designData = {
     "duration": "2h 10m",
     "genre": "Action"
   }
+
+  const genreData = {
+
+      "genres": [
+        {
+          "id": 28,
+          "name": "Action"
+        },
+        {
+          "id": 12,
+          "name": "Adventure"
+        },
+        {
+          "id": 16,
+          "name": "Animation"
+        },
+        {
+          "id": 35,
+          "name": "Comedy"
+        },
+        {
+          "id": 80,
+          "name": "Crime"
+        },
+        {
+          "id": 99,
+          "name": "Documentary"
+        },
+        {
+          "id": 18,
+          "name": "Drama"
+        },
+        {
+          "id": 10751,
+          "name": "Family"
+        },
+        {
+          "id": 14,
+          "name": "Fantasy"
+        },
+        {
+          "id": 36,
+          "name": "History"
+        },
+        {
+          "id": 27,
+          "name": "Horror"
+        },
+        {
+          "id": 10402,
+          "name": "Music"
+        },
+        {
+          "id": 9648,
+          "name": "Mystery"
+        },
+        {
+          "id": 10749,
+          "name": "Romance"
+        },
+        {
+          "id": 878,
+          "name": "Science Fiction"
+        },
+        {
+          "id": 10770,
+          "name": "TV Movie"
+        },
+        {
+          "id": 53,
+          "name": "Thriller"
+        },
+        {
+          "id": 10752,
+          "name": "War"
+        },
+        {
+          "id": 37,
+          "name": "Western"
+        }
+      ]
+  }
   function MovieDetail() {
     const location = useLocation();
     const [isPlaying, setIsPlaying] = useState(false);
@@ -39,6 +121,25 @@ const designData = {
   
     // Access the movie data from the location state
     const movie = location.state && location.state.movie;
+    
+    const mapGenreIdToName = (genreId) => {
+      const genre = genreData.genres.find((g) => g.id === genreId);
+      return genre ? genre.name : '';
+    };
+    
+
+    function formatNumberToK(number) {
+    if (number >= 1000 && number < 1000000) {
+      // Convert to thousands format (e.g., 1.2K)
+      return (number / 1000).toFixed(1) + 'K';
+    } else if (number >= 1000000) {
+      // Convert to millions format (e.g., 3.5M)
+      return (number / 1000000).toFixed(1) + 'M';
+    } else {
+      // Use the number as is (no conversion needed)
+      return number.toString();
+    }
+  }
   
     const toggleVideo = () => {
       setIsPlaying(!isPlaying);
@@ -138,10 +239,29 @@ const designData = {
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
                     <p>{designData.duration}</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
-                    <button style={{borderColor: '#F8E7EB', borderWidth: '1px', color: "#B91C1C", padding: '3px', borderRadius: '15px', fontSize: '14px', height: "30px", width: "84px", fontWeight: '500'}}>{designData.genre}</button>
+                    {/* Map through the genre_ids array and create a button for each genre */}
+                    {movie.genre_ids.map((genreId, index) => (
+                      <button
+                        key={index} // Use a unique key for each button
+                        style={{
+                          borderColor: '#F8E7EB',
+                          borderWidth: '1px',
+                          color: "#B91C1C",
+                          padding: '3px',
+                          borderRadius: '15px',
+                          fontSize: '14px',
+                          height: "30px",
+                          width: "84px",
+                          marginLeft: '10px',
+                          fontWeight: '500'
+                        }}
+                      >
+                        {mapGenreIdToName(genreId)} {/* Display the genre ID as the button label */}
+                      </button>
+                    ))}
                 </div>
                 <div style={{display: 'flex'}}>
-                    <FaStar style={{color: '#FFCD29', fontSize: '20px'}}/><p>{designData.vote_average}|350k</p>
+                    <FaStar style={{color: '#FFCD29', fontSize: '20px'}}/><p style={{color: '#E8E8E8', marginLeft:'5px'}}>{designData.vote_average}</p><p style={{fontWeight: '500', color: '#666666'}}>|{formatNumberToK(movie.vote_count)}</p>
                 </div>
             </div>
       <div className="section-two">
