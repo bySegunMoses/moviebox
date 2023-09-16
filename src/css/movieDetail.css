@@ -159,3 +159,77 @@
     text-align: center;
     border-radius: 10px;
   }
+
+  /* Add this CSS to your existing CSS file (e.g., movieDetail.css) or in a style block */
+
+/* For movie-detail-main and its child components */
+.movie-detail-main {
+  display: flex;
+  width: 75%;
+  padding: 0;
+  color: #404040;
+  font-weight: 500;
+}
+
+.movie-detail-main p {
+  font-size: 1em; /* Adjust the font size as needed */
+}
+
+/* For rating-and-award and its child components */
+.rating-and-award {
+  overflow: hidden;
+  display: flex;
+  border-color: #c7c7c7;
+  border-width: 1px;
+  border-radius: 10px;
+  margin-top: 30px;
+  width: 90%;
+  height: 55px;
+}
+
+.rating-and-award > div {
+  width: 30%;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.rating-and-award > div p {
+  font-size: 1.2em; /* Adjust the font size as needed */
+}
+
+.rating-and-award > div:first-child {
+  font-weight: 600; /* Adjust the font weight as needed */
+}
+
+.rating-and-award > div:last-child {
+  font-weight: 400; /* Adjust the font weight as needed */
+}
+
+.rating-and-award svg {
+  color: #7c7c7c;
+}
+
+/* Style the viewers-rating div */
+.viewers-rating {
+  display: flex;
+  align-items: center;
+  margin-left: 20px; /* Adjust the margin as needed */
+}
+
+.viewers-rating p {
+  margin: 0 5px;
+}
+
+.viewers-rating .FaStar {
+  color: #FFCD29;
+  font-size: 20px;
+}
+
+.viewers-rating .vote-count {
+  font-weight: 500;
+  color: #666666;
+}

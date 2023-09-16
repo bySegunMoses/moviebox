@@ -7,7 +7,7 @@ import favClicked from '../../assets/favClicked.svg'
 import '../../css/MovieCard.css';
 import genredata from '../../data/genre.json';
 
-const MovieCard = ({ id, title, rating, genres, year, isTVSeries, backgroundImage, isCurrent, likes }) => {
+const MovieCard = ({ id, title, release_date, rating, genres, year, isTVSeries, backgroundImage, isCurrent, likes }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const toggleFavorite = () => {
@@ -40,7 +40,7 @@ const MovieCard = ({ id, title, rating, genres, year, isTVSeries, backgroundImag
       </div>
       <div className="movie-card-details">
         <p className="movie-year" style={{ color: '#9CA3AF', fontSize: '14px', fontWeight: 500 }}>
-            USA, {yearPart} {isCurrent && <p>- Current</p>}
+            {release_date}
         </p>
         <h2 className="movie-title" style={{ color: '#111827', fontSize: '20px', fontWeight: 500 }}>
           {title}

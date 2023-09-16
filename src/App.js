@@ -24,7 +24,7 @@ function App() {
               type="text"
               placeholder="What do you want to watch"
               className="search-box"
-              style={{ background: 'transparent', color:'#fff', width: '80%', outline: 'none' }}
+              style={{ background: 'transparent', color:'#fff', width: '80%', outline: 'none', padding: '10px' }}
             />
             <button>
             <FaSearch className="search-icon" />

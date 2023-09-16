@@ -11,7 +11,7 @@ const FeaturedMovies = () => {
 
   const goToMovieDetail = (movie) => {
     // Use the navigate function to navigate and pass the movie data as a parameter
-    navigate(`/movie/${movie.id}`, { state: { movie } });
+    navigate(`/movies/${movie.id}`, { state: { movie } });
   };
 
   useEffect(() => {
@@ -74,10 +74,11 @@ const FeaturedMovies = () => {
             {isLoading ? (
               <div>Loading...</div>
             ) : (
-              topMovies.slice(0, 12).map((movie, index) => (
+              topMovies.slice(0, 10).map((movie, index) => (
                 <button onClick={goToMovieDetail.bind(null, movie)}><MovieCard
                   key={index}
                   id={movie.id}
+                  release_date={movie.release_date}
                   title={movie.title}
                   rating={movie.vote_average}
                   genres={movie.genre_ids}

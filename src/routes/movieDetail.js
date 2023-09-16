@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import { FaPlay, FaPause, FaDotCircle, FaStar, FaChevronDown } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
+import { FaDotCircle, FaStar, FaChevronDown } from 'react-icons/fa';
 import '../css/movieDetail.css';
 import ticket from '../assets/Two Tickets.svg'
 import listIcon from '../assets/List.svg'
-import listIconWhite from '../assets/List-white.png';
 import suggested from '../assets/Group52.png'
 
-
+let MNDATA = {}
 const designData = {
     "adult": false,
     "backdrop_path": "/tmU7GeKVybMWFButWEGl2M4GeiP.jpg",
@@ -117,6 +116,7 @@ const designData = {
     const location = useLocation();
     const [isPlaying, setIsPlaying] = useState(false);
     const [youtubeUrl, setYoutubeUrl] = useState('');
+    const [maindata, setMainData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
   
     // Access the movie data from the location state
@@ -144,6 +144,38 @@ const designData = {
     const toggleVideo = () => {
       setIsPlaying(!isPlaying);
     };
+
+
+    const fetchAdditionalData = async () => {
+      try {
+        const movieId = movie.id;
+        const apiKey = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMGU0MTQ5YTdiODUzMDAwYjAwZGYwYzM5ZmEyMzA4YSIsInN1YiI6IjY0ZmZiYjFiZGI0ZWQ2MTAzNDNmNjExNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WYRcJJLchZznbLgiDB2P59x3HdMokz7UIL96fEcmsuE';  // Replace with your API key
+        const apiUrl = `https://api.themoviedb.org/3/movie/${movieId}`;
+        
+        const fetchData = async (apiUrl, apiKey) => {
+          try {
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Accept': 'application/json',
+              },
+            });
+            const data = await response.json();
+            //console.log(data);
+            return data;
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error;
+          }
+        };
+        const data = await fetchData(apiUrl, apiKey);
+        MNDATA = data;
+        console.log(data)
+      } catch (error) {
+        console.error('Error fetching additional data:', error);
+      }
+    };
   
     useEffect(() => {
       // Fetch the YouTube video URL based on the movie ID
@@ -164,6 +196,7 @@ const designData = {
                 },
               });
               const data = await response.json();
+              //console.log(data);
               return data;
             } catch (error) {
               console.error('Error fetching data:', error);
@@ -174,16 +207,18 @@ const designData = {
           
           // Extract the year from the published_at field
           const publishedYear = new Date(data.published_at).getFullYear();
+          const movie_title  = data.title;
           
           // Update the designData object with the extracted year
           const updatedDesignData = {
             ...designData,
             release_year: publishedYear.toString(), // Convert to string if needed
+            movie_title: movie_title,
           };
   
           if (data.results && data.results.length > 0) {
             const youtubeKey = data.results[0].key;
-            console.log(data)
+            //console.log(data)
             const videoUrl = `https://www.youtube.com/embed/${youtubeKey}`;
             setYoutubeUrl(videoUrl);
           } else {
@@ -198,6 +233,7 @@ const designData = {
   
       if (movie) {
         fetchYoutubeUrl();
+        fetchAdditionalData();
       }
     }, [movie]);
   
@@ -208,7 +244,7 @@ const designData = {
             <div>Loading video...</div>
           ) : (
             <iframe
-              title="Movie Trailer"
+              title={movie.title}
               width="640"
               height="360"
               src={youtubeUrl}
@@ -229,15 +265,15 @@ const designData = {
             </div>
           )}
         </div>
-      <div style={{display: 'flex', justifyContent: 'space-between', padding: 0, width: '95%'}}>
+      <div style={{display: 'flex', justifyContent: 'space-between', padding: 0, width: '95%'}} className='movie-detail-main'>
                 <div style={{display: 'flex', width: '95%', padding: 0, color: '#404040', fontWeight: '500'}}>
                     <p>{movie.title}</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
-                    <p>{designData.release_year}</p>
+                    <p>{movie.release_date}(UTC)</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
                     <p>PG - {designData.PG}</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
-                    <p>{designData.duration}</p>
+                    <p>{MNDATA.runtime} minutes</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
                     {/* Map through the genre_ids array and create a button for each genre */}
                     {movie.genre_ids.map((genreId, index) => (
@@ -260,7 +296,7 @@ const designData = {
                       </button>
                     ))}
                 </div>
-                <div style={{display: 'flex'}}>
+                <div className='viewers-rating'>
                     <FaStar style={{color: '#FFCD29', fontSize: '20px'}}/><p style={{color: '#E8E8E8', marginLeft:'5px'}}>{designData.vote_average}</p><p style={{fontWeight: '500', color: '#666666'}}>|{formatNumberToK(movie.vote_count)}</p>
                 </div>
             </div>
@@ -276,7 +312,7 @@ const designData = {
                     <div style={{display: 'flex', marginTop: '30px'}}><p style={{color:'#333333'}}>Stars</p><p style={{marginLeft: '8px', marginRight: '8px'}}>:</p><p style={{color: '#BE123C'}}>Tom Cruise, Jennifer Connelly, Miles Teller</p></div>
                 </div>
 
-                <div style={{overflow: 'hidden', display: 'flex', borderColor: '#C7C7C7', borderWidth: '1px', borderRadius: '10px', marginTop: 30, width: '90%', height: '55px'}}>
+                <div className='rating-and-award' style={{overflow: 'hidden', display: 'flex', borderColor: '#C7C7C7', borderWidth: '1px', borderRadius: '10px', marginTop: 30, width: '90%', height: '55px'}}>
                     <div style={{
                         background: '#BE123C',
                         width: '30%',
@@ -292,7 +328,8 @@ const designData = {
                         justifyContent:'space-between',
                         padding: '0px 15px 0px 15px',
                         alignItems: 'center',
-                        width: '70%'
+                        width: '70%',
+                        color: '#666666'
                     }}><p>Award 9 norminations</p> <FaChevronDown style={{color: '#7C7C7C'}} /></div>
                 </div>
             </div>
