@@ -267,13 +267,13 @@ const designData = {
         </div>
       <div style={{display: 'flex', justifyContent: 'space-between', padding: 0, width: '95%'}} className='movie-detail-main'>
                 <div style={{display: 'flex', width: '95%', padding: 0, color: '#404040', fontWeight: '500'}}>
-                    <p>{movie.title}</p>
+                    <p data-testid="movie-title">{movie.title}</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
-                    <p>{movie.release_date}(UTC)</p>
+                    <p data-testid="movie-release-date">{movie.release_date}(UTC)</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
                     <p>PG - {designData.PG}</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
-                    <p>{MNDATA.runtime} minutes</p>
+                    <p data-testid="movie-runtime">{MNDATA.runtime} minutes</p>
                     <FaDotCircle style={{fontSize: '8px', marginTop: 8, marginLeft: 10, marginRight: 10}}/>
                     {/* Map through the genre_ids array and create a button for each genre */}
                     {movie.genre_ids.map((genreId, index) => (
@@ -304,7 +304,7 @@ const designData = {
             <div className='section-two-left'>
                 
                 <div style={{marginTop: 15}}>
-                    <p>{movie.overview}</p>
+                    <p data-testid="movie-overview">{movie.overview}</p>
                 </div>
                 <div style={{marginTop: '30px'}}>
                     <div style={{display: 'flex', marginTop: '30px'}}><p style={{color:'#333333'}}>Directors</p><p style={{marginLeft: '8px', marginRight: '8px'}}>:</p><p style={{color: '#BE123C'}}>Joshua Konsinski</p></div>

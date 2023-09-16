@@ -30,19 +30,19 @@ const MovieCard = ({ id, title, release_date, rating, genres, year, isTVSeries, 
 
 
   return (
-    <div className="movie-card">
+    <div data-testid="movie-card" className="movie-card">
       {id === 238 && <div className="tv-series-label">TV SERIES</div>}
       {isFavorite && <img className="fav-button" style={{borderRadius: '50px'}} src={favClicked} />}
-      <div className="movie-card-image" style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div data-testid="movie-poster" className="movie-card-image" style={{ backgroundImage: `url(${backgroundImage})` }}>
         <button className={`fav-button ${isFavorite ? 'favorited' : ''}`} onClick={toggleFavorite}>
           {isFavorite ? <img src={favourite} /> : <img src={favourite} />}
         </button>
       </div>
       <div className="movie-card-details">
-        <p className="movie-year" style={{ color: '#9CA3AF', fontSize: '14px', fontWeight: 500 }}>
+        <p data-testid="movie-release-date" className="movie-year" style={{ color: '#9CA3AF', fontSize: '14px', fontWeight: 500 }}>
             {release_date}
         </p>
-        <h2 className="movie-title" style={{ color: '#111827', fontSize: '20px', fontWeight: 500 }}>
+        <h2 data-testid="movie-title" className="movie-title" style={{ color: '#111827', fontSize: '20px', fontWeight: 500 }}>
           {title}
         </h2>
         <div style={{ display: 'flex', padding: 0, justifyContent: 'space-between' }}>
